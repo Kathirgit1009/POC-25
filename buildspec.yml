@@ -1,9 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    TF_ACTION: "apply"
-
 phases:
   install:
     commands:
@@ -15,11 +11,13 @@ phases:
 
   build:
     commands:
-      - echo "Terraform Action is $TF_ACTION"
+      - echo "Terraform Action: ${TF_ACTION:-apply}"
       - terraform init
       - |
-        if [ "$TF_ACTION" = "destroy" ]; then
+        if [ "${TF_ACTION:-apply}" = "destroy" ]; then
+          echo "Running terraform destroy"
           terraform destroy -auto-approve
         else
+          echo "Running terraform apply"
           terraform apply -auto-approve
         fi

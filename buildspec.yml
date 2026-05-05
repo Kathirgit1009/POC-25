@@ -1,0 +1,25 @@
+version: 0.2
+
+env:
+  variables:
+    TF_ACTION: "apply"
+
+phases:
+  install:
+    commands:
+      - echo "Installing Terraform"
+      - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.7.5/terraform_1.7.5_linux_amd64.zip
+      - unzip terraform.zip
+      - mv terraform /usr/local/bin/
+      - terraform --version
+
+  build:
+    commands:
+      - echo "Terraform Action is $TF_ACTION"
+      - terraform init
+      - |
+        if [ "$TF_ACTION" = "destroy" ]; then
+          terraform destroy -auto-approve
+        else
+          terraform apply -auto-approve
+        fi

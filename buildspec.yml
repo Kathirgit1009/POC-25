@@ -14,10 +14,10 @@ phases:
       - echo "Terraform Action: ${TF_ACTION:-apply}"
       - terraform init
       - |
-        if [ "${TF_ACTION:-apply}" = "destroy" ]; then
-          echo "Running terraform destroy"
-          terraform destroy -auto-approve
-        else
-          echo "Running terraform apply"
-          terraform apply -auto-approve
-        fi
+          if [ "${TF_ACTION:-apply}" = "destroy" ]; then
+            echo "Running terraform destroy"
+            terraform destroy -auto-approve
+          else
+            echo "Running terraform apply"
+            terraform apply -auto-approve
+          fi
